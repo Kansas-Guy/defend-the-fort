@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Contact Form</title>
+    </head>
+
+<body>
+
+    <p>Choose your sport:</p>
+    <ul>
+        {% for team in teams %}
+        <li>{{ team.team_text }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+

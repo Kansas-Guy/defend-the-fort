@@ -1,0 +1,47 @@
+from django.shortcuts import redirect, render
+from django.http import HttpResponse
+from .forms import StudentForm, DonorForm
+from .models import Student, Team
+
+# Create your views here.
+
+def index(request):
+    # anything that can be done to limit input error should be done
+    teams = Team.objects.all()
+    return render(request, 'contact/index.html', dict(teams=teams))
+
+def student(request):
+    if request.POST:
+
+        form = StudentForm(request.POST, request.FILES)
+        if form.is_valid():
+            request.session['student_name'] = form.cleaned_data['student_name']
+            form.save()
+            # student_id = form.id
+        # send user to the donor form after completing their data
+        return redirect(donor)
+
+    return render(request, 'contact/student.html', {'form': StudentForm})
+
+def donor(request):
+    # grabbing student_name from previous form to see on page
+    student_name = request.session['student_name']
+    # use student_name to pull the student id that just filled out the form
+    name = Student.objects.get(student_name = student_name)
+    # trying to update this to show how many donors a student has submitted
+    # look at inline formsets to have all donor forms on one page
+    donors_submitted = 1
+    if request.POST:
+        form = DonorForm(request.POST, request.FILES)
+        if form.is_valid():
+            donor_contact = form.save(commit=False)
+            donor_contact.donor_student = name
+            donor_contact.save()
+            if donors_submitted <= 6:
+                return redirect(donor)
+            else:
+                return redirect(index)
+    else:
+        form = DonorForm()
+
+    return render(request, 'contact/donor.html', dict(form=DonorForm, student_name=student_name, donors_submitted=donors_submitted))
