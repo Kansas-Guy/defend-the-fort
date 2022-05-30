@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from .models import Student, Team, Donor
 
 class StudentForm(ModelForm):
-    student_name = forms.TextInput()
+    student_name = forms.ModelChoiceField(queryset=Student.objects.all())
     student_phone = forms.TextInput()
     student_email = forms.TextInput()
     team = forms.ModelChoiceField(queryset=Team.objects.all())
