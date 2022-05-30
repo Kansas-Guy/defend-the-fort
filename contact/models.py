@@ -9,8 +9,8 @@ class Team(models.Model):
 
 class Student(models.Model):
     student_name = models.CharField(max_length=100)
-    student_phone = models.CharField(max_length=20)
-    student_email = models.CharField(max_length=100)
+    student_phone = models.CharField(max_length=20, null=True)
+    student_email = models.CharField(max_length=100, null=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def __str__(self):
