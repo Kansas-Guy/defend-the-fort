@@ -1,31 +1,42 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import StudentForm, DonorForm
+from .forms import StudentForm, DonorForm, TeamForm
 from .models import Student, Team
 
 # Create your views here.
 
 def index(request):
     # anything that can be done to limit input error should be done
-    teams = Team.objects.all()
-    return render(request, 'contact/index.html', dict(teams=teams))
+    if request.POST:
+        form = TeamForm(request.POST)
+        if form.is_valid():
+            # team = request.session['team_name']
+            # team = Team.objects.get(team_text=team)
+            return redirect('student')
+    else:
+        form = TeamForm()
+    return render(request, 'contact/index.html', dict(form=TeamForm))
 
 def student(request):
+
     if request.POST:
 
         form = StudentForm(request.POST, request.FILES)
         if form.is_valid():
             request.session['student_name'] = form.cleaned_data['student_name']
+            # s_name = request.session['student_name']
             form.save()
+
             # student_id = form.id
         # send user to the donor form after completing their data
         return redirect(donor)
 
-    return render(request, 'contact/student.html', {'form': StudentForm})
+    return render(request, 'contact/student.html', dict(form=StudentForm))
 
 def donor(request):
     # grabbing student_name from previous form to see on page
     student_name = request.session['student_name']
+    print(student_name)
     # use student_name to pull the student id that just filled out the form
     name = Student.objects.get(student_name = student_name)
     # trying to update this to show how many donors a student has submitted

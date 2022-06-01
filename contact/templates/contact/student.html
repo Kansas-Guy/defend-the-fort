@@ -6,7 +6,7 @@
     </head>
 
 <body>
-    <form method="POST" action="{%  url 'student' %}" enctype="multipart/form-data">
+    <form method="POST" action="{% url 'student' %}" enctype="multipart/form-data">
         {%  csrf_token %}
         {{  form.as_p }}
     <button>Submit</button>

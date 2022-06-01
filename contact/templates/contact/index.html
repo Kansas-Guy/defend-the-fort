@@ -8,11 +8,11 @@
 <body>
 
     <p>Choose your sport:</p>
-    <ul>
-        {% for team in teams %}
-            <li><a href="{% url 'contact:student' team.team_text%}"> {{ team.team_text }}</a></li>
-        {% endfor %}
-    </ul>
+    <form method="POST" action="{% url 'index' %}" enctype="multipart/form-data">
+        {%  csrf_token %}
+        {{  form.as_p }}
+    <button>Next</button>
+    </form>
 </body>
 </html>
 
