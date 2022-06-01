@@ -29,33 +29,29 @@ def student(request, team_select):
             # use team_select to fill out team field in form
             student_form.team = Team.objects.get(pk=team_select)
             student_form.save()
-            request.session['student_name'] = form.cleaned_data['student_name']
+            student_name = request.POST.get('student_name')
             form.save()
         # send user to the donor form after completing their data
-        return redirect(donor)
+        return redirect(donors, student_name)
 
     return render(request, 'contact/student.html', dict(form=StudentForm,team_select=team_select))
 
-def donor(request):
+def donors(request, student_name):
     # grabbing student_name from previous form to see on page
-    student_name = request.session['student_name']
-    print(student_name)
+    student_name = student_name
     # use student_name to pull the student id that just filled out the form
     name = Student.objects.get(student_name = student_name)
     # trying to update this to show how many donors a student has submitted
     # look at inline formsets to have all donor forms on one page
-    donors_submitted = 1
     if request.POST:
         form = DonorForm(request.POST, request.FILES)
         if form.is_valid():
             donor_contact = form.save(commit=False)
             donor_contact.donor_student = name
             donor_contact.save()
-            if donors_submitted <= 6:
-                return redirect(donor)
-            else:
-                return redirect(index)
+            return redirect(index)
+
     else:
         form = DonorForm()
 
-    return render(request, 'contact/donor.html', dict(form=DonorForm, student_name=student_name, donors_submitted=donors_submitted))
+    return render(request, 'contact/donor.html', dict(form=DonorForm, student_name=student_name))

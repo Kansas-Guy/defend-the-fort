@@ -8,5 +8,5 @@ urlpatterns = [
     # ex: /contact/Football
     path('student/<int:team_select>', views.student, name='student'),
     # ex: /contact/donor
-    path('donor/', views.donor, name='donor')
+    path('<str:student_name>/donor/', views.donors, name='donor')
 ]
