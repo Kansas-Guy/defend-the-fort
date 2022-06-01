@@ -10,28 +10,27 @@ def index(request):
     if request.POST:
         form = TeamForm(request.POST)
         if form.is_valid():
-            # team = request.session['team_name']
-            # team = Team.objects.get(team_text=team)
-            return redirect('student')
+            team_select = request.POST.get('team')
+            return redirect('student', team_select)
     else:
         form = TeamForm()
     return render(request, 'contact/index.html', dict(form=TeamForm))
 
-def student(request):
-
+def student(request, team_select):
+    team_select=team_select
     if request.POST:
-
         form = StudentForm(request.POST, request.FILES)
         if form.is_valid():
+            student_form = form.save(commit=False)
+            student_form.team = Team.objects.get(pk=team_select)
+            student_form.save()
             request.session['student_name'] = form.cleaned_data['student_name']
             # s_name = request.session['student_name']
             form.save()
-
-            # student_id = form.id
         # send user to the donor form after completing their data
         return redirect(donor)
 
-    return render(request, 'contact/student.html', dict(form=StudentForm))
+    return render(request, 'contact/student.html', dict(form=StudentForm,team_select=team_select))
 
 def donor(request):
     # grabbing student_name from previous form to see on page

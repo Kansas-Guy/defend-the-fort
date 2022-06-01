@@ -10,11 +10,10 @@ class StudentForm(ModelForm):
     student_name = forms.TextInput()
     student_phone = forms.TextInput()
     student_email = forms.TextInput()
-    team = forms.ModelChoiceField(queryset=Team.objects.all())
     class Meta:
         model = Student
-        exclulde = ('team',)
-        fields= ['student_name', 'student_phone', 'student_email', 'team']
+        exclude = ('team',)
+        fields= ['student_name', 'student_phone', 'student_email']
 
 
 class DonorForm(ModelForm):

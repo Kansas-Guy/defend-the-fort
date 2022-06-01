@@ -6,7 +6,7 @@ urlpatterns = [
     # ex: /contact/
     path('', views.index, name='index'),
     # ex: /contact/Football
-    path('student/', views.student, name='student'),
+    path('student/<int:team_select>', views.student, name='student'),
     # ex: /contact/donor
     path('donor/', views.donor, name='donor')
 ]
