@@ -10,7 +10,7 @@
     <p>Choose your sport:</p>
     <ul>
         {% for team in teams %}
-            <li><a href="{% url 'student' %}"> {{ team.team_text }}</a></li>
+            <li><a href="{% url 'contact:student' team.team_text%}"> {{ team.team_text }}</a></li>
         {% endfor %}
     </ul>
 </body>
