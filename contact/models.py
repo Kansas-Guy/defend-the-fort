@@ -9,8 +9,9 @@ class Team(models.Model):
 
 class Student(models.Model):
     student_name = models.CharField(max_length=100)
-    student_phone = models.CharField(max_length=20, blank=True, null=True)
-    student_email = models.CharField(max_length=100, blank=True, null=True)
+    pref_name = models.CharField(max_length=20,null=True, blank=False)
+    student_phone = models.CharField(max_length=20, null=True, blank=False)
+    student_email = models.CharField(max_length=100, null=True, blank=False)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -21,6 +22,8 @@ class Donor(models.Model):
     donor_email = models.CharField(max_length=100)
     donor_phone = models.CharField(max_length=20)
     donor_address = models.CharField(max_length=200)
+    donor_city = models.CharField(max_length=100)
+    donor_state = models.CharField(max_length=2)
     donor_student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     def __str__(self):
