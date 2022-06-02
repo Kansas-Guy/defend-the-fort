@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Donor Contact Form</title>
-    </head>
-
-<body>
-    <p>{{ student_name }}, fill in the donor contact information below.</p>
-    <p>Donor info submitted: {{ donors_submitted }}/6</p>
-    <form method="POST" action="{%  url 'donor' student_name %}" enctype="multipart/form-data">
-        {%  csrf_token %}
-        {{  form.as_p }}
-    <button>Submit</button>
-    </form>
-
-</body>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donor Information Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+  <body>
+      <section class="section">
+        <div class="container">
+            <p>{{ student_name }}, fill in the donor contact information below.</p>
+            <p>Donor info submitted: {{ donors_submitted }}/6</p>
+            <form method="POST" action="{%  url 'donor' student_name %}" enctype="multipart/form-data">
+                {%  csrf_token %}
+                {{  form.as_p }}
+                <button>Submit</button>
+            </form>
+        </div>
+      </section>
+  </body>
 </html>
 
 
