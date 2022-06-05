@@ -1,18 +1,18 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Student, Team, Donor
+from .models import StudentInfo, Team, Donor
 
 class TeamForm(forms.Form):
     team = forms.ModelChoiceField(queryset=Team.objects.all())
 
 class StudentForm(ModelForm):
-    student_name = forms.TextInput()
-    pref_name = forms.TextInput()
-    student_phone = forms.TextInput()
-    student_email = forms.TextInput()
+    # student_name = forms.ModelChoiceField(queryset=StudentInfo.objects.all())
+    # pref_name = forms.TextInput()
+    # student_phone = forms.TextInput()
+    # student_email = forms.TextInput()
     class Meta:
-        model = Student
+        model = StudentInfo
         exclude = ('team',)
         fields= ['student_name', 'pref_name', 'student_phone', 'student_email']
         labels = {
@@ -20,6 +20,9 @@ class StudentForm(ModelForm):
             'student_phone': "Phone number",
             'student_email': "Email address"
         }
+    def __int__(self, team_id, *args, **kwargs):
+        super(StudentForm, self).__int__(*args, **kwargs)
+        self.fields['student_name'].queryset = StudentInfo.objects.filter(team=team_id)
 
 STATE_CHOICES = [
      ('AL', 'Alabama'),('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'),('CO', 'Colorado'),

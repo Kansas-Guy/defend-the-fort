@@ -13,7 +13,7 @@ class Roster(models.Model):
     def __str__(self):
         return self.student
 
-class Student(models.Model):
+class StudentInfo(models.Model):
     student_name = models.ForeignKey(Roster, on_delete=models.CASCADE)
     pref_name = models.CharField(max_length=20,null=True, blank=False)
     student_phone = models.CharField(max_length=20, null=True, blank=False)
@@ -30,7 +30,7 @@ class Donor(models.Model):
     donor_address = models.CharField(max_length=200)
     donor_city = models.CharField(max_length=100)
     donor_state = models.CharField(max_length=2)
-    donor_student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    donor_student = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.donor_name

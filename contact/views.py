@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .forms import StudentForm, DonorForm, TeamForm
-from .models import Student, Team
+from .models import StudentInfo, Team
 
 # Create your views here.
 
@@ -22,8 +22,9 @@ def index(request):
 def student(request, team_select):
     # establish team_select variable in view
     team_select=team_select
+    queryset = StudentInfo.objects.filter(team = team_select)
     if request.POST:
-        form = StudentForm(request.POST, request.FILES)
+        form = StudentForm(team_select, request.POST, request.FILES, queryset=queryset)
         if form.is_valid():
             student_form = form.save(commit=False)
             # use team_select to fill out team field in form
@@ -40,7 +41,7 @@ def donors(request, student_name):
     # grabbing student_name from previous form to see on page
     student_name = student_name
     # use student_name to pull the student id that just filled out the form
-    name = Student.objects.get(student_name = student_name)
+    name = StudentInfo.objects.get(student_name = student_name)
     # trying to update this to show how many donors a student has submitted
     # look at inline formsets to have all donor forms on one page
     if request.POST:
