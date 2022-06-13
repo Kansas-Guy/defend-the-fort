@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
 from .forms import StudentForm, DonorForm, TeamForm
-from .models import StudentInfo, Team
+from .models import StudentInfo, Team, Roster
 
 # Create your views here.
 
@@ -20,11 +19,9 @@ def index(request):
     return render(request, 'contact/index.html', dict(form=TeamForm))
 
 def student(request, team_select):
-    # establish team_select variable in view
-    team_select=team_select
-    queryset = StudentInfo.objects.filter(team = team_select)
-    if request.POST:
-        form = StudentForm(team_select, request.POST, request.FILES, queryset=queryset)
+
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
         if form.is_valid():
             student_form = form.save(commit=False)
             # use team_select to fill out team field in form
@@ -33,16 +30,15 @@ def student(request, team_select):
             student_name = request.POST.get('student_name')
             form.save()
         # send user to the donor form after completing their data
-        return redirect(donors, student_name)
+            return redirect(donors, student_name)
+    else:
+        form = StudentForm(team_select)
 
     return render(request, 'contact/student.html', dict(form=StudentForm,team_select=team_select))
 
 def donors(request, student_name):
-    # grabbing student_name from previous form to see on page
-    student_name = student_name
     # use student_name to pull the student id that just filled out the form
-    name = StudentInfo.objects.get(student_name = student_name)
-    # trying to update this to show how many donors a student has submitted
+    student_name = StudentInfo.objects.get(student_name = student_name)
     # look at inline formsets to have all donor forms on one page
     if request.POST:
         form = DonorForm(request.POST, request.FILES)

@@ -8,10 +8,10 @@ class Team(models.Model):
         return self.team_text
 
 class Roster(models.Model):
-    student = models.CharField(max_length=100)
+    student_name = models.CharField(max_length=100)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     def __str__(self):
-        return self.student
+        return self.student_name
 
 class StudentInfo(models.Model):
     student_name = models.ForeignKey(Roster, on_delete=models.CASCADE)
@@ -21,7 +21,7 @@ class StudentInfo(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.student_name
+        return self.pref_name
 
 class Donor(models.Model):
     donor_name = models.CharField(max_length=100)
