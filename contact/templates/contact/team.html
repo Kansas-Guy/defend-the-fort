@@ -10,7 +10,7 @@
       <section class="section">
         <div class="container">
             <p class="text">Choose your sport:</p>
-            <form method="POST" action="{% url 'index' %}" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'team' %}" enctype="multipart/form-data">
                 {%  csrf_token %}
                 {{ form.as_p }}
                 <button>Next</button>

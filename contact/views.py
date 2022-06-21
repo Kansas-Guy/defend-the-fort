@@ -4,7 +4,10 @@ from .models import StudentInfo, Team, Roster
 
 # Create your views here.
 
-def index(request):
+def contact(request):
+    return render(request, 'base.html')
+
+def team(request):
     # anything that can be done to limit input error should be done
     if request.POST:
         form = TeamForm(request.POST)
@@ -16,7 +19,7 @@ def index(request):
             return redirect('student', team_select)
     else:
         form = TeamForm()
-    return render(request, 'contact/index.html', dict(form=TeamForm))
+    return render(request, 'contact/team.html', dict(form=TeamForm))
 
 def student(request, team_select):
 
@@ -32,7 +35,8 @@ def student(request, team_select):
         # send user to the donor form after completing their data
             return redirect(donors, student_name)
     else:
-        form = StudentForm(team_select)
+        form = StudentForm()
+        form.fields['student_name'].queryset = Roster.objects.filter(team=1)
 
     return render(request, 'contact/student.html', dict(form=StudentForm,team_select=team_select))
 
