@@ -29,6 +29,7 @@ class Donor(models.Model):
     donor_phone = models.CharField(max_length=20)
     donor_address = models.CharField(max_length=200)
     donor_city = models.CharField(max_length=100)
+    donor_zip = models.CharField(max_length=10)
     donor_state = models.CharField(max_length=2)
     donor_student = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
 

@@ -41,10 +41,11 @@ class DonorForm(ModelForm):
     donor_email = forms.TextInput()
     donor_address = forms.TextInput()
     donor_city = forms.TextInput()
+    donor_zip = forms.TextInput()
     donor_state = forms.CharField(widget=forms.Select(choices=STATE_CHOICES))
     donor_student = forms.TextInput()
     class Meta:
         model = Donor
         # leaving out donor_student so the view fills in that input
         exclude = ('donor_student',)
-        fields= ['donor_name', 'donor_phone', 'donor_email', 'donor_address', 'donor_city', 'donor_state']
+        fields= ['donor_name', 'donor_phone', 'donor_email', 'donor_address', 'donor_city', 'donor_zip', 'donor_state']
