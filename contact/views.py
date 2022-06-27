@@ -24,7 +24,7 @@ def team(request):
 def student(request, team_select):
 
     if request.method == 'POST':
-        form = StudentForm(request.POST)
+        form = StudentForm(team_select, request.POST)
         if form.is_valid():
             student_form = form.save(commit=False)
             # use team_select to fill out team field in form
@@ -35,10 +35,9 @@ def student(request, team_select):
         # send user to the donor form after completing their data
             return redirect(donors, student_name)
     else:
-        form = StudentForm()
-        form.fields['student_name'].queryset = Roster.objects.filter(team=1)
+        form = StudentForm(team_select)
 
-    return render(request, 'contact/student.html', dict(form=StudentForm,team_select=team_select))
+    return render(request, 'contact/student.html', dict(form=form,team_select=team_select))
 
 def donors(request, student_name):
     # use student_name to pull the student id that just filled out the form

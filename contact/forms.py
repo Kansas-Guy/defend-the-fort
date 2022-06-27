@@ -17,8 +17,8 @@ class StudentForm(forms.ModelForm):
             'student_phone': "Phone number",
             'student_email': "Email address"
         }
-    def __int__(self, team, *args, **kwargs):
-        super(StudentForm, self).__init__(*args, **kwargs)
+    def __init__(self, team, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.fields['student_name'].queryset = Roster.objects.filter(team__roster=team)
 
 
