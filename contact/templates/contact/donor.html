@@ -3,9 +3,9 @@
 {% block content %}
       <section class="section">
         <div class="container">
-            <p>{{ student_name }}, fill in the donor contact information below.</p>
+
             <p>Donor info submitted: {{ donors_submitted }}/6</p>
-            <form method="POST" action="{%  url 'donor' student_name %}" enctype="multipart/form-data">
+            <form method="POST" action="{%  url 'donor' student_id %}" enctype="multipart/form-data">
                 {%  csrf_token %}
                 {{  form.as_p }}
                 <button>Submit</button>

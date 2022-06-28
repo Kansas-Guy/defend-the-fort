@@ -43,7 +43,6 @@ class DonorForm(ModelForm):
     donor_city = forms.TextInput()
     donor_zip = forms.TextInput()
     donor_state = forms.CharField(widget=forms.Select(choices=STATE_CHOICES))
-    donor_student = forms.TextInput()
     class Meta:
         model = Donor
         # leaving out donor_student so the view fills in that input

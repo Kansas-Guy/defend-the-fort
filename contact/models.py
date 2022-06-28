@@ -31,7 +31,7 @@ class Donor(models.Model):
     donor_city = models.CharField(max_length=100)
     donor_zip = models.CharField(max_length=10)
     donor_state = models.CharField(max_length=2)
-    donor_student = models.ForeignKey(StudentInfo, on_delete=models.CASCADE)
+    donor_student = models.ForeignKey(Roster, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.donor_name
