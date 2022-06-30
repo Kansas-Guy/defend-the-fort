@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from .forms import StudentForm, DonorForm, TeamForm
-from .models import StudentInfo, Team, Roster
+from .models import StudentInfo, Team, Roster, Donor
 
 # Create your views here.
 
@@ -46,18 +46,19 @@ def student(request, team_select):
     return render(request, 'contact/student.html', dict(form=form,team_select=team_select))
 
 def donors(request, student_id):
-    # use student_name to pull the student id that just filled out the form
-    # student_id = StudentInfo.objects.get(student_name = student_name)
-    # look at inline formsets to have all donor forms on one page
+    donor_count = Donor.objects.filter(donor_student=student_id).count()
     if request.POST:
         form = DonorForm(request.POST, request.FILES)
         if form.is_valid():
             donor_contact = form.save(commit=False)
             donor_contact.donor_student = Roster.objects.get(pk=student_id)
             donor_contact.save()
-            return redirect(contact)
+            if donor_count < 10:
+                return redirect(donors, student_id)
+            else:
+                return redirect(contact)
 
     else:
         form = DonorForm()
 
-    return render(request, 'contact/donor.html', dict(form=form,student_id=student_id))
+    return render(request, 'contact/donor.html', dict(form=form,student_id=student_id, donor_count=donor_count))
