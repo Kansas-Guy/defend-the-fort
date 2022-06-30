@@ -5,7 +5,7 @@ from .models import StudentInfo, Team, Roster
 # Create your views here.
 
 def contact(request):
-    return render(request, 'base.html')
+    return render(request, 'contact/contact.html')
 
 def team(request):
     # anything that can be done to limit input error should be done
