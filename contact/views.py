@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .forms import StudentForm, DonorForm, TeamForm
+from .forms import StudentForm, DonorForm, TeamForm, CoachForm
 from .models import StudentInfo, Team, Roster, Donor
 
 # Create your views here.
@@ -62,3 +62,24 @@ def donors(request, student_id):
         form = DonorForm()
 
     return render(request, 'contact/donor.html', dict(form=form,student_id=student_id, donor_count=donor_count))
+
+def coach(request):
+    if request.POST:
+        form = CoachForm(request.POST)
+        coach = form.coach
+        team_pw = Team.objects.filter(team_text=team)
+        team_pw = team_pw.coach
+        if pw_check.password == team_pw:
+            return redirect(dashboard, team)
+        else:
+            return redirect(coach)
+    else:
+        form = CoachForm()
+    return render(request, 'contact/coach.html', dict(form=form))
+
+def dashboard(request, team): # add team parameter after deciding how coach should "login"
+    team_name = Team.objects.get(pk=team)
+    team_name = team_name.team_text
+    students = Roster.objects.filter(team=team)
+    donor_count = { s.student_name: Donor.objects.filter(donor_student=s.pk).count() for s in students }
+    return render(request, 'contact/dashboard.html', dict(team_name=team_name, donor_count=donor_count))

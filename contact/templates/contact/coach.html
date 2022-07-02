@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <form method="POST" action="{%  url 'coach'  %}" enctype="multipart/form-data">
+                {%  csrf_token %}
+                {{  form.as_p }}
+                <button>Submit</button>
+            </form>
+        </div>
+    </section>
+{% endblock content %}
+
+
+
+

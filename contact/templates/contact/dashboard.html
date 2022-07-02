@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">{{ team_name}}: Donor Contact Submissions</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Student-Athlete</th>
+                        <th>Donors Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for k, v in donor_count.items %}
+                    <tr>
+                        <td>{{ k }}</td>
+                        <td>{{ v }}</td>
+                    {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </section>
+{% endblock content %}
+
+
+
+
