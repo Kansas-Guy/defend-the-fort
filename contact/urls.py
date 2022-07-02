@@ -9,5 +9,7 @@ urlpatterns = [
     # ex: /contact/Football
     path('<int:team_select>/student', views.student, name='student'),
     # ex: /contact/donor
-    path('<int:student_id>/donor', views.donors, name='donor')
+    path('<int:student_id>/donor', views.donors, name='donor'),
+    path('coach', views.coach, name='coach'),
+    path('coach/<int:team>/dashboard', views.dashboard, name='dashboard'),
 ]
