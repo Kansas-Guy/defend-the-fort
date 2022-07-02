@@ -66,13 +66,11 @@ def donors(request, student_id):
 def coach(request):
     if request.POST:
         form = CoachForm(request.POST)
-        coach = form.coach
-        team_pw = Team.objects.filter(team_text=team)
-        team_pw = team_pw.coach
-        if pw_check.password == team_pw:
+        if form.is_valid():
+            team = form.cleaned_data['team']
+            team = Team.objects.get(team_text = team).pk
             return redirect(dashboard, team)
-        else:
-            return redirect(coach)
+
     else:
         form = CoachForm()
     return render(request, 'contact/coach.html', dict(form=form))
