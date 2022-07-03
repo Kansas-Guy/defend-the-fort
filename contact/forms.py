@@ -48,3 +48,7 @@ class DonorForm(ModelForm):
         # leaving out donor_student so the view fills in that input
         exclude = ('donor_student',)
         fields= ['donor_name', 'donor_phone', 'donor_email', 'donor_address', 'donor_city', 'donor_zip', 'donor_state']
+
+class CoachForm(forms.Form):
+    team = forms.ModelChoiceField(queryset = Team.objects.all())
+    coach = forms.TextInput()
