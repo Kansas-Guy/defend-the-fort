@@ -2,7 +2,8 @@
 
 {% block content %}
     <section class="section">
-        <div class="container">
+        <div class="form-container">
+            <p>Provide your information:</p>
             <form method="POST" action="{% url 'student' team_select %}" enctype="multipart/form-data">
                 {%  csrf_token %}
                 {{  form.as_p }}

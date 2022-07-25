@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="{% static 'contact/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     <title>Defend the Fort FHSU</title>
 </head>
 <body>
-    <section class="hero is-small is-dark mb-4">
-        <div class="hero-body">
-            <h1 class="title is-2"><a href="{% url 'home' %}"> Defend the Fort</a></h1>
-        </div>
-    </section>
-    <div class="container">
-        <div class="columns">
-            {% block content %}
+    <nav>
+            <h1><a href="{% url 'home' %}"> Defend the Fort</a></h1>
+    </nav>
 
-            {% endblock content %}
-        </div>
-    </div>
+    {% block content %}
+
+    {% endblock content %}
+
 </body>
 </html>
