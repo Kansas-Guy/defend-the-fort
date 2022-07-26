@@ -48,10 +48,9 @@ def student_info(request, student_id, team_select):
             student_form = form.save(commit=False)
             # use team_select to fill out team field in form
             student_form.team = Team.objects.get(pk=team_select)
+            # use student_id to fill out student_name field in form
             student_form.student_name = Roster.objects.get(pk=student_id)
             student_form.save()
-            # student_name = request.POST.get('student_name')
-            pref_name = request.POST.get('pref_name')
             form.save()
         # send user to the donor form after completing their data
             return redirect(donors, student_id)
