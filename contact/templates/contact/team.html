@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section class="section">
-        <div class="form-container">
-            <p class="text">Choose your sport:</p>
-            <form method="POST" action="{% url 'team' %}" enctype="multipart/form-data">
-                {%  csrf_token %}
-                {{ form.as_p }}
-                <button>Next</button>
-            </form>
-        </div>
-    </section>
+
+    <div class="form-container">
+        <p class="text">Choose your sport:</p>
+        <form method="POST" action="{% url 'team' %}" enctype="multipart/form-data">
+            {%  csrf_token %}
+            {{ form.as_p }}
+            <button>Next</button>
+        </form>
+    </div>
+
 {% endblock content %}
 
 
