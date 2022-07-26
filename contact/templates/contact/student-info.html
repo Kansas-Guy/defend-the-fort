@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="form-container">
+            <p>Provide your information:</p>
+            <form method="POST" action="{% url 'student-info' student_id team_select %}" enctype="multipart/form-data">
+                {%  csrf_token %}
+                {{  form.as_p }}
+            <button>Next</button>
+            </form>
+        </div>
+    </section>
+{% endblock content %}
+

@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .forms import StudentForm, DonorForm, TeamForm, CoachForm
+from .forms import StudentInfoForm, DonorForm, TeamForm, CoachForm, StudentSelect
 from .models import StudentInfo, Team, Roster, Donor
 
 # Create your views here.
@@ -21,29 +21,44 @@ def team(request):
         form = TeamForm()
     return render(request, 'contact/team.html', dict(form=TeamForm))
 
-def student(request, team_select):
+def student(request, team_select): # view for selecting student name
 
     if request.method == 'POST':
-        form = StudentForm(team_select, request.POST)
+        form = StudentSelect(team_select, request.POST)
+        if form.is_valid():
+            student_name = request.POST.get('student_name')
+            student_id = Roster.objects.get(pk=student_name).pk
+            # check to see if student has provided their info
+            try:
+                obj = StudentInfo.objects.get(student_name_id=student_id)
+            except:
+                return redirect(student_info, student_id, team_select)
+            if StudentInfo.objects.filter(student_name_id=student_id).exists():
+                return redirect(donors, student_id)
+            return redirect(student_info, student_id, team_select)
+    else:
+        form = StudentSelect(team_select)
+
+    return render(request, 'contact/student.html', dict(form=form,team_select=team_select))
+
+def student_info(request, student_id, team_select):
+    if request.method == 'POST':
+        form = StudentInfoForm(request.POST)
         if form.is_valid():
             student_form = form.save(commit=False)
             # use team_select to fill out team field in form
             student_form.team = Team.objects.get(pk=team_select)
+            student_form.student_name = Roster.objects.get(pk=student_id)
             student_form.save()
-            student_name = request.POST.get('student_name')
+            # student_name = request.POST.get('student_name')
             pref_name = request.POST.get('pref_name')
             form.save()
-            # TODO fix the problem with multiple student_ids
-                # should grab the pk from roster instead of studentinfo so there can only ever be one
-            student_id = Roster.objects.get(pk=student_name).pk
-            # student_id = student_id.last()
-            # student_id = student_id.pk
         # send user to the donor form after completing their data
             return redirect(donors, student_id)
     else:
-        form = StudentForm(team_select)
+        form = StudentInfoForm()
 
-    return render(request, 'contact/student.html', dict(form=form,team_select=team_select))
+    return render(request, 'contact/student-info.html', dict(form=form,team_select=team_select, student_id=student_id))
 
 def donors(request, student_id):
     donor_count = Donor.objects.filter(donor_student=student_id).count()
