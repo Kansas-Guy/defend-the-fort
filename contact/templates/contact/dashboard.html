@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section class="section">
         <div class="container">
-            <h1 class="title">{{ team_name}}: Donor Contact Submissions</h1>
+            <div class="page-title">
+                <h2>FHSU {{ team_name}}</h2>
+                <h4>Donor Contact Submissions</h4>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -20,9 +22,7 @@
                     </tr>
                 </tbody>
             </table>
-
         </div>
-    </section>
 {% endblock content %}
 
 

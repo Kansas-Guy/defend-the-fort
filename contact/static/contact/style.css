@@ -128,3 +128,35 @@ footer ul li a {
     padding: 10px 30px 30px;
     margin-bottom: 15px;
 }
+
+table {
+    border-collapse: separate;
+    border-spacing: 25px 10px;
+    width: 80%;
+    margin: auto;
+    top: 20px;
+    position: relative;
+}
+
+tbody tr td {
+    text-align: center;
+}
+
+.page-title {
+    width: 90%;
+    margin: auto;
+    border-bottom: #333333 2px solid;
+}
+
+.page-title h2, h4 {
+    text-align: center;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+h4 {
+    font-size: 1.25em;
+    font-style: italic;
+}
