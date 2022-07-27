@@ -26,8 +26,7 @@ h1 a {
 }
 
 .main-button {
-    display: inline-block;
-    top: 75px;
+    display: block;
     background-color: #333333;
     position: relative;
     color: white;
@@ -37,6 +36,7 @@ h1 a {
     margin: 0 10px;
     text-align: center;
     border: solid 2px transparent;
+    width: 20vw;
 }
 
 .main-button:hover {
@@ -55,7 +55,7 @@ h1 a {
     width: 90%;
     margin: auto;
     display: block;
-    top: 75px;
+    top: 100px;
     position: relative;
 }
 
@@ -94,4 +94,37 @@ button {
     padding: 10px 25px;
     border: #333333 2px solid;
     border-radius: 7px;
+}
+
+footer {
+    background: #333333;
+    position: fixed;
+    display: block;
+    width: 100%;
+    margin: 0;
+    bottom: 0;
+    left:0;
+    height: 100px;
+
+}
+
+footer ul li {
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    list-style-type: none;
+
+}
+
+footer ul li a {
+    color: white
+}
+
+.home-section {
+    width: 80%;
+    position: relative;
+    display: block;
+    background-color: white;
+    padding: 10px 30px 30px;
+    margin-bottom: 15px;
 }
