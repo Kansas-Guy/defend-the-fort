@@ -13,17 +13,18 @@
     <nav>
             <h1><a href="{% url 'home' %}"> Defend the Fort</a></h1>
     </nav>
+    <div class = 'content'>
+        {% block content %}
 
-    {% block content %}
+        {% endblock content %}
+    </div>
 
-    {% endblock content %}
 
+</body>
 <footer>
     <ul>
         <li>Defend the Fort 2022</li>
         <li><em>Need help? <a href="mailto:zrwoolf@fhsu.edu"> Email Zach Woolf with the FHSU Foundation.</a></em></li>
     </ul>
 </footer>
-
-</body>
 </html>

@@ -5,6 +5,8 @@
 body {
     font-family: "Open Sans", sans-serif;
     background-color: #f7f6f3;
+    position: relative;
+    min-height: 100%;
 }
 
 nav {
@@ -99,12 +101,11 @@ button {
 footer {
     background: #333333;
     position: fixed;
-    display: block;
     width: 100%;
-    margin: 0;
     bottom: 0;
     left:0;
-    height: 100px;
+    height: 5rem;
+    padding: 10px 0 20px 0;
 
 }
 
@@ -159,4 +160,8 @@ h2 {
 h4 {
     font-size: 1.25em;
     font-style: italic;
+}
+
+.content {
+    padding-bottom: 100px;
 }
