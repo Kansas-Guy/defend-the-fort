@@ -9,14 +9,14 @@ class TeamForm(forms.Form):
 class StudentSelect(forms.ModelForm):
     class Meta:
         model = StudentInfo
-        exclude = ('team',)
+        exclude = ('team','pref_name', 'student_phone', 'student_email')
         fields = ('student_name',)
         labels = {
             'student_name': "Select your name"
         }
     def __init__(self, team, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['student_name'].queryset = Roster.objects.filter(team__roster=team)
+        self.fields['student_name'].queryset = Roster.objects.filter(team_id=team)
 
 class StudentInfoForm(forms.ModelForm):
     # student_name = forms.ModelChoiceField(queryset=Roster.objects.all(), to_field_name='student_name')
