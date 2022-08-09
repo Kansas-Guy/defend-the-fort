@@ -70,7 +70,7 @@ def donors(request, student_id):
             if donor_count < 10:
                 return redirect(donors, student_id)
             else:
-                return redirect(contact)
+                return redirect(review, student_id)
 
     else:
         form = DonorForm()
@@ -95,3 +95,7 @@ def dashboard(request, team): # add team parameter after deciding how coach shou
     students = Roster.objects.filter(team=team)
     donor_count = { s.student_name: Donor.objects.filter(donor_student=s.pk).count() for s in students }
     return render(request, 'contact/dashboard.html', dict(team_name=team_name, donor_count=donor_count))
+
+def review(request, student_id):
+    s_donors = Donor.objects.filter(donor_student_id=student_id)
+    return render(request, 'contact/review.html', dict(student_id=student_id, s_donors=s_donors))

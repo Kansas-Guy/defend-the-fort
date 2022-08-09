@@ -12,4 +12,5 @@ urlpatterns = [
     path('<int:student_id>/donor', views.donors, name='donor'),
     path('coach', views.coach, name='coach'),
     path('coach/<int:team>/dashboard', views.dashboard, name='dashboard'),
+    path('<int:student_id>/donor/review', views.review, name='review'),
 ]
