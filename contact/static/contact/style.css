@@ -6,7 +6,9 @@ body {
     font-family: "Open Sans", sans-serif;
     background-color: #f7f6f3;
     position: relative;
-    min-height: 100%;
+    min-height: 100vh;
+    margin-bottom: 200px;
+    clear: both;
 }
 
 nav {
@@ -100,11 +102,12 @@ button {
 footer {
     background: #333333;
     position: fixed;
+    display: block;
     width: 100%;
-    bottom: 0;
+    bottom: 0px;
     left:0;
     height: 100px;
-    padding: 10px 0 20px 0;
+    padding: 10px 0 10px 0;
 
 }
 

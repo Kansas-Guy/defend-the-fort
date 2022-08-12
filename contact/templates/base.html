@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'contact/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-    <title>Defend the Fort FHSU</title>
-</head>
-<body>
-    <nav>
-            <h1><a href="{% url 'home' %}"> Defend the Fort</a></h1>
-    </nav>
-    <div class = 'content'>
-        {% block content %}
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'contact/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+        <title>Defend the Fort FHSU</title>
+    </head>
 
-        {% endblock content %}
-    </div>
+    <body>
+        <nav>
+                <h1><a href="{% url 'home' %}"> Defend the Fort</a></h1>
+        </nav>
+        <div class = 'content'>
+            {% block content %}
+
+            {% endblock content %}
+        </div>
 
 
-</body>
-<footer>
-    <ul>
-        <li>Defend the Fort 2022</li>
-        <li><em>Need help? <a href="mailto:zrwoolf@fhsu.edu"> Email Zach Woolf with the FHSU Foundation.</a></em></li>
-    </ul>
-</footer>
+    </body>
+    <footer>
+        <ul>
+            <li>Defend the Fort 2022</li>
+            <li><em>Need help? <a href="mailto:zrwoolf@fhsu.edu"> Email Zach Woolf with the FHSU Foundation.</a></em></li>
+        </ul>
+    </footer>
 </html>
