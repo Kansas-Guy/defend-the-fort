@@ -82,8 +82,8 @@ form {
     margin: auto;
     padding: 25px;
     border-radius: 7px;
-    top: 75px;
     position: relative;
+    display: block;
 }
 
 input, select {
@@ -167,7 +167,11 @@ h4 {
 
 .content {
     padding-bottom: 100px;
+    padding-top: 50px;
     position: relative;
     display: block;
-    top: 100px;
+    width: 85%;
+    background-color: gainsboro;
+    margin: auto;
+    border-radius: 7px;
 }

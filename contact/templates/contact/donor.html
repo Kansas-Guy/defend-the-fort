@@ -10,6 +10,35 @@
             <button>Submit</button>
         </form>
     </div>
+    <div class="content">
+        <h4 class="page-title">Submitted Contact Information</h4>
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zipcode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in s_donors %}
+                    <tr>
+                        <td>{{ d.donor_name }}</td>
+                        <td>{{ d.donor_email }}</td>
+                        <td>{{ d.donor_phone }}</td>
+                        <td>{{ d.donor_address }}</td>
+                        <td>{{ d.donor_city }}</td>
+                        <td>{{ d.donor_state }}</td>
+                        <td>{{ d.donor_zip }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+        </table>
+    </div>
 
 
 {% endblock content %}

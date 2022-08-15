@@ -61,6 +61,7 @@ def student_info(request, student_id, team_select):
 
 def donors(request, student_id):
     donor_count = Donor.objects.filter(donor_student=student_id).count()
+    s_donors = Donor.objects.filter(donor_student_id=student_id)
     if request.POST:
         form = DonorForm(request.POST, request.FILES)
         if form.is_valid():
@@ -75,7 +76,8 @@ def donors(request, student_id):
     else:
         form = DonorForm()
 
-    return render(request, 'contact/donor.html', dict(form=form,student_id=student_id, donor_count=donor_count))
+    return render(request, 'contact/donor.html', dict(form=form,student_id=student_id, donor_count=donor_count,
+                                                      s_donors=s_donors))
 
 def coach(request):
     if request.POST:
