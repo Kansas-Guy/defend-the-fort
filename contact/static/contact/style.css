@@ -173,5 +173,17 @@ h4 {
     width: 85%;
     background-color: gainsboro;
     margin: auto;
+    top: 100px;
+    border-radius: 7px;
+}
+
+.donor-content {
+    padding-bottom: 100px;
+    padding-top: 50px;
+    position: relative;
+    display: block;
+    width: 85%;
+    background-color: gainsboro;
+    margin: auto;
     border-radius: 7px;
 }
