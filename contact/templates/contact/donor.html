@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="form-container">
-        <p>Donor info submitted: {{ donor_count }}/10</p>
+        <p>Contact info submitted: {{ donor_count }}/10</p>
         <form method="POST" action="{%  url 'donor' student_id %}" enctype="multipart/form-data">
             {%  csrf_token %}
             {{  form.as_p }}

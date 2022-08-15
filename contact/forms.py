@@ -60,6 +60,8 @@ class DonorForm(ModelForm):
         # leaving out donor_student so the view fills in that input
         exclude = ('donor_student',)
         fields= ['donor_name', 'donor_phone', 'donor_email', 'donor_address', 'donor_city', 'donor_zip', 'donor_state']
+        labels= dict(donor_state="State", donor_name="First and Last Name", donor_phone="Phone", donor_email="Email",
+                     donor_address="Address", donor_city="City", donor_zip="Zipcode", )
 
 class CoachForm(forms.Form):
     team = forms.ModelChoiceField(queryset = Team.objects.all())
