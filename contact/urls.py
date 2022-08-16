@@ -13,4 +13,5 @@ urlpatterns = [
     path('coach', views.coach, name='coach'),
     path('coach/<int:team>/dashboard', views.dashboard, name='dashboard'),
     path('<int:student_id>/donor/review', views.review, name='review'),
+    path('donor/<int:donor_id>/update', views.donor_edit, name='donor_edit'),
 ]

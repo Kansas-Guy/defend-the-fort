@@ -101,3 +101,16 @@ def dashboard(request, team): # add team parameter after deciding how coach shou
 def review(request, student_id):
     s_donors = Donor.objects.filter(donor_student_id=student_id)
     return render(request, 'contact/review.html', dict(student_id=student_id, s_donors=s_donors))
+
+def donor_edit(request, donor_id):
+    donor = Donor.objects.get(id=donor_id)
+    student_id = donor.donor_student_id
+
+    if request.method == 'POST':
+        form = DonorForm(request.POST, instance=donor)
+        if form.is_valid():
+            form.save()
+            return redirect(donors, student_id)
+    else:
+        form = DonorForm(instance=donor)
+    return render(request, 'contact/donor_edit.html', dict(donor_id=donor_id, form=form, student_id=student_id))
