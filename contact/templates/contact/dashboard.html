@@ -22,6 +22,19 @@
                     </tr>
                 </tbody>
             </table>
+            <tbody>
+                    {% for d in donorInfo %}
+                    <tr>
+                        <td>{{ d.donor_name }}</td>
+                        <td>{{ d.donor_email }}</td>
+                        <td>{{ d.donor_phone }}</td>
+                        <td>{{ d.donor_address }}</td>
+                        <td>{{ d.donor_city }}</td>
+                        <td>{{ d.donor_state }}</td>
+                        <td>{{ d.donor_zip }}</td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
         </div>
 {% endblock content %}
 
