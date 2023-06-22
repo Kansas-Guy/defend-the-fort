@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="page-title">
+                <h2>{{ name }}'s Contacts</h2>
+            </div>
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zipcode</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in donors %}
+                    <tr>
+                        <td>{{ d.donor_name }}</td>
+                        <td>{{ d.donor_email }}</td>
+                        <td>{{ d.donor_phone }}</td>
+                        <td>{{ d.donor_address }}</td>
+                        <td>{{ d.donor_city }}</td>
+                        <td>{{ d.donor_state }}</td>
+                        <td>{{ d.donor_zip }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+
+{% endblock %}

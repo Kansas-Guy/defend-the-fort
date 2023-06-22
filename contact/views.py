@@ -92,10 +92,23 @@ def dashboard(request, team): # Donor information for each student needs to be p
     team_name = Team.objects.get(pk=team)
     team_name = team_name.team_text
     students = Roster.objects.filter(team=team)
-    donor_count = { s.student_name: Donor.objects.filter(donor_student=s.pk).count() for s in students }
-    donorInfo= Donor.objects.filter(donor_student_id=students.pk)
-    return render(request, 'contact/dashboard.html', dict(team_name=team_name, donor_count=donor_count,
-                                                          donorInfo=donorInfo))
+    student_info = []
+
+        studentDict = {
+            'name': s.student_name,
+            'donor_count': Donor.objects.filter(donor_student=s.pk).count(),
+            'student_id': s.pk,
+        }
+        student_info.append(studentDict)
+
+    return render(request, 'contact/dashboard.html', dict(team_name=team_name, student_info=student_info))
+
+def donor_review(request, student_id):
+    student = Roster.objects.get(pk=student_id)
+    name = student.student_name
+    donors = Donor.objects.filter(donor_student_id=student_id)
+    return render(request, 'contact/donor_review.html', dict(donors=donors, name=name))
+
 
 def review(request, student_id):
     s_donors = Donor.objects.filter(donor_student_id=student_id)
