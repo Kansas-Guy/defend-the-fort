@@ -14,15 +14,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for k, v in donor_count.items %}
+                    {% for student in student_info %}
                     <tr>
-                        <td>{{ k }}</td>
-                        <td>{{ v }}</td>
+                        <td><a href="{%  url 'donor_review' student.student_id %}">{{ student.name }}</a></td>
+                        <td>{{ student.donor_count }}</td>
                     {% endfor %}
                     </tr>
                 </tbody>
-            </table>
-        </div>
+{#            </table>#}
+</div>
 {% endblock content %}
 
 
