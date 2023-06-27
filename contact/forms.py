@@ -62,6 +62,13 @@ class DonorForm(ModelForm):
         fields= ['donor_name', 'donor_phone', 'donor_email', 'donor_address', 'donor_city', 'donor_zip', 'donor_state']
         labels= dict(donor_state="State", donor_name="First and Last Name", donor_phone="Phone", donor_email="Email",
                      donor_address="Address", donor_city="City", donor_zip="Zipcode", )
+    def clean(self):
+        cleaned_data = super().clean()
+        address = cleaned_data.get('donor_address')
+        student = cleaned_data.get('donor_student')
+        if address and student and Donor.objects.filter(donor_address=address, donor_student=student).exists():
+            raise ValidationError('You have already submitted a contact with that address.')
+        return cleaned_data
 
 class CoachForm(forms.Form):
     team = forms.ModelChoiceField(queryset = Team.objects.all())

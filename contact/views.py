@@ -1,7 +1,11 @@
 from django.shortcuts import redirect, render
 from .forms import StudentInfoForm, DonorForm, TeamForm, CoachForm, StudentSelect
 from .models import StudentInfo, Team, Roster, Donor
-
+from rest_framework import viewsets
+from .serializers import DonorSerializer, RosterSerializer
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 # Create your views here.
 
 def contact(request):
@@ -127,3 +131,18 @@ def donor_edit(request, donor_id):
     else:
         form = DonorForm(instance=donor)
     return render(request, 'contact/donor_edit.html', dict(donor_id=donor_id, form=form, student_id=student_id))
+
+class DonorViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Donor.objects.all()
+    serializer_class = DonorSerializer
+
+class RosterViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Roster.objects.all()
+    serializer_class = RosterSerializer
+
+@api_view(['GET'])
+def donors_for_student(request, student_id):
+    student = get_object_or_404(Roster, pk=student_id)
+    donors = Donor.objects.filter(donor_student=student)
+    serializer = DonorSerializer(donors, many=True)
+    return Response(serializer.data)
