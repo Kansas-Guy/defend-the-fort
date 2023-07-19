@@ -1,28 +1,85 @@
 {% extends 'base.html' %}
 
 {% block content %}
-        <div class="container">
-            <div class="page-title">
-                <h2>FHSU {{ team_name}}</h2>
-                <h4>Donor Contact Submissions</h4>
+    <div class="container">
+        <div class="page-title">
+            <h2>FHSU {{ team_name }}</h2>
+            <p>Donor Contact Submissions</p>
+        </div>
+        <div id="students">
+            {% for student in student_info %}
+            <div class="student" data-id="{{ student.student_id }}">
+                <h3>{{ student.name }}</h3>
+                <p>Donor contacts submitted: {{ student.donor_count }}</p>
+                <button class="load-donors">Review Donor Contacts</button>
+                <div class="donors"></div>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Student-Athlete</th>
-                        <th>Donors Submitted</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for student in student_info %}
-                    <tr>
-                        <td><a href="{%  url 'donor_review' student.student_id %}">{{ student.name }}</a></td>
-                        <td>{{ student.donor_count }}</td>
-                    {% endfor %}
-                    </tr>
-                </tbody>
-{#            </table>#}
-</div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+    function formatFieldName(fieldName) {
+        let parts = fieldName.split('_');
+        for (let i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+        }
+        return parts.join(' ');
+        }
+    let loadDonorButtons = document.querySelectorAll('.load-donors');
+
+    loadDonorButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // hide all other donors divs
+            let allDonorDivs = document.querySelectorAll('.donors');
+            allDonorDivs.forEach(div => {
+                div.innerHTML = '';
+                div.style.display = 'none';
+            });
+
+            let studentDiv = this.parentElement;
+
+            let donorsDiv = studentDiv.querySelector('.donors');
+
+            let studentId = studentDiv.getAttribute('data-id');
+
+            fetch(`/contact/api/donors/${studentId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    let table = document.createElement('table');
+                    let thead = document.createElement('thead');
+                    let tbody = document.createElement('tbody');
+
+                    let fields = ['donor_name', 'donor_email', 'donor_phone', 'donor_address', 'donor_city', 'donor_state', 'donor_zip'];
+
+                    // Create table header row
+                    let headerRow = document.createElement('tr');
+                    for (let field of fields) {
+                        let th = document.createElement('th');
+                        th.textContent = formatFieldName(field);
+                        headerRow.appendChild(th);
+                    }
+                    thead.appendChild(headerRow);
+                    for (let donor of data) {
+                       let bodyRow = document.createElement('tr');
+                        for (let field of fields) {
+                            let td = document.createElement('td');
+                            td.textContent = donor[field];
+                            bodyRow.appendChild(td);
+                        }
+                        tbody.appendChild(bodyRow);
+
+                        // Add thead and tbody to the table
+                        table.appendChild(thead);
+                        table.appendChild(tbody);
+
+                        donorsDiv.appendChild(table);
+                    }
+
+                    donorsDiv.style.display = 'block';
+                });
+        });
+    });
+    </script>
 {% endblock content %}
 
 
