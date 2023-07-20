@@ -63,19 +63,26 @@ def student_info(request, student_id, team_select):
 def donors(request, student_id):
     donor_count = Donor.objects.filter(donor_student=student_id).count()
     s_donors = Donor.objects.filter(donor_student_id=student_id)
-    if request.POST:
-        form = DonorForm(request.POST, request.FILES)
+    student = Roster.objects.get(pk=student_id)
+
+    if request.method == 'POST':
+        form = DonorForm(request.POST, student=student)
+
         if form.is_valid():
             donor_contact = form.save(commit=False)
-            donor_contact.donor_student = Roster.objects.get(pk=student_id)
+            donor_contact.donor_student = student
+            form.instance = donor_contact
             donor_contact.save()
+
             if donor_count < 10:
                 return redirect(donors, student_id)
             else:
                 return redirect(review, student_id)
+        else:
+            print(form.errors)
 
     else:
-        form = DonorForm()
+        form = DonorForm(student=student)
 
     return render(request, 'contact/donor.html', dict(form=form,student_id=student_id, donor_count=donor_count,
                                                       s_donors=s_donors))

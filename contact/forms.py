@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+from django.core.exceptions import ValidationError
 
 from .models import StudentInfo, Team, Donor, Roster
 
@@ -48,12 +49,6 @@ STATE_CHOICES = [
 ]
 
 class DonorForm(ModelForm):
-    donor_name = forms.TextInput()
-    donor_phone = forms.TextInput()
-    donor_email = forms.TextInput()
-    donor_address = forms.TextInput()
-    donor_city = forms.TextInput()
-    donor_zip = forms.TextInput()
     donor_state = forms.CharField(widget=forms.Select(choices=STATE_CHOICES))
     class Meta:
         model = Donor
@@ -62,10 +57,14 @@ class DonorForm(ModelForm):
         fields= ['donor_name', 'donor_phone', 'donor_email', 'donor_address', 'donor_city', 'donor_zip', 'donor_state']
         labels= dict(donor_state="State", donor_name="First and Last Name", donor_phone="Phone", donor_email="Email",
                      donor_address="Address", donor_city="City", donor_zip="Zipcode", )
+
+    def __init__(self, *args, **kwargs):
+        self.student = kwargs.pop('student', None)  # extract student from kwargs
+        super().__init__(*args, **kwargs)
     def clean(self):
         cleaned_data = super().clean()
         address = cleaned_data.get('donor_address')
-        student = cleaned_data.get('donor_student')
+        student = self.student
         if address and student and Donor.objects.filter(donor_address=address, donor_student=student).exists():
             raise ValidationError('You have already submitted a contact with that address.')
         return cleaned_data
