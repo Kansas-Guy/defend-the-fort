@@ -6,6 +6,9 @@ from .serializers import DonorSerializer, RosterSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 # Create your views here.
 
 def contact(request):
@@ -153,3 +156,14 @@ def donors_for_student(request, student_id):
     donors = Donor.objects.filter(donor_student=student)
     serializer = DonorSerializer(donors, many=True)
     return Response(serializer.data)
+
+@csrf_exempt
+def approve(request, donor_id):
+    if request.method == 'POST':
+        donor = Donor.objects.get(pk=donor_id)
+        data = json.loads(request.body)
+        donor.is_approved = data['is_approved']
+        donor.save()
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'failed', 'error': 'Invalid request method'})

@@ -32,6 +32,7 @@ class Donor(models.Model):
     donor_zip = models.CharField(max_length=10)
     donor_state = models.CharField(max_length=100)
     donor_student = models.ForeignKey(Roster, on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.donor_name

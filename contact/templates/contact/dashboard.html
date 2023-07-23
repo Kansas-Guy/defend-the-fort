@@ -18,6 +18,22 @@
         </div>
     </div>
     <script>
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
     function formatFieldName(fieldName) {
         let parts = fieldName.split('_');
         for (let i = 0; i < parts.length; i++) {
@@ -37,9 +53,7 @@
             });
 
             let studentDiv = this.parentElement;
-
             let donorsDiv = studentDiv.querySelector('.donors');
-
             let studentId = studentDiv.getAttribute('data-id');
 
             fetch(`/contact/api/donors/${studentId}/`)
@@ -49,7 +63,8 @@
                     let thead = document.createElement('thead');
                     let tbody = document.createElement('tbody');
 
-                    let fields = ['donor_name', 'donor_email', 'donor_phone', 'donor_address', 'donor_city', 'donor_state', 'donor_zip'];
+                    let fields = ['donor_name', 'donor_email', 'donor_phone', 'donor_address', 'donor_city',
+                        'donor_state', 'donor_zip', 'is_approved'];
 
                     // Create table header row
                     let headerRow = document.createElement('tr');
@@ -60,10 +75,39 @@
                     }
                     thead.appendChild(headerRow);
                     for (let donor of data) {
-                       let bodyRow = document.createElement('tr');
+                        console.log(`Donor ID: ${donor.id}, Approval status: ${donor.is_approved}`);
+                        let bodyRow = document.createElement('tr');
                         for (let field of fields) {
                             let td = document.createElement('td');
-                            td.textContent = donor[field];
+                            if (field === 'is_approved') {
+                                // Create checkbox for is_approved field
+                                let checkbox = document.createElement('input');
+                                checkbox.type = 'checkbox';
+                                checkbox.className = 'approve-checkbox';
+                                checkbox.setAttribute('data-id', donor.id);
+                                checkbox.checked = donor.is_approved;
+                                td.appendChild(checkbox);
+                                checkbox.addEventListener('click', function() {
+                                    fetch(`/contact/api/approve/${donor['id']}/`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            // Include CSRF token
+                                            'X-CSRFToken': getCookie('csrftoken'),
+                                    },
+                                        body: JSON.stringify({
+                                            is_approved: this.checked,
+                                        }),
+                                    })
+                                    .then(response => response.json())
+                                        .then(data => {
+                                            console.log(data);
+                                        });
+                                });
+
+                            } else {
+                                td.textContent = donor[field];
+                            }
                             bodyRow.appendChild(td);
                         }
                         tbody.appendChild(bodyRow);

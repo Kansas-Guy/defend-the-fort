@@ -21,4 +21,5 @@ urlpatterns = [
     path('donor/<int:donor_id>/update', views.donor_edit, name='donor_edit'),
     path('donor_review/<int:student_id>', views.donor_review, name='donor_review'),
     path('api/donors/<int:student_id>/', views.donors_for_student),
+    path('api/approve/<int:donor_id>/', views.approve, name='approve'),
 ]
