@@ -6,7 +6,7 @@
         <form method="POST" action="{% url 'student' team_select %}" enctype="multipart/form-data">
             {%  csrf_token %}
             {{  form.as_p }}
-        <button>Next</button>
+        <button class="main-button">Next</button>
         </form>
     </div>
 

@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 
+{%  load static %}
+
 {% block content %}
+    <div class="home">
+        <section class="home-section">
+            <div class="welcome-section">
+                <div class="welcome-image">
+                    <img src="{% static 'images/dtf_softball_big.jpg' %}" alt="FHSU Softball Hitting">
+                </div>
+                <div class="welcome-text">
+                    <h2>Welcome, Tigers!</h2>
+                    <p>As a vital member of our Tiger athletic family, your contribution can make a huge difference. The success of this year's <em>Defend the Fort</em> campaign depends on you!</p>
+                    <p>We're all in this together – let's make this campaign a win for all our teams.</p>
+                    <a class="begin-button" href="/contact/team">Begin Here</a>
+                </div>
+            </div>
 
-        <div class="home">
-            <section class="home-section">
-                <h2>Student-Athletes</h2>
-                <p>The success of this year's Defend the Fort campaign depends on the information you provide.</p>
-                <a class="main-button" href="/contact/team">Student Athletes</a>
-            </section>
-
-        </div>
-
+        </section>
+    </div>
 {% endblock content %}

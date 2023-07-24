@@ -65,6 +65,8 @@ def student_info(request, student_id, team_select):
 
 def donors(request, student_id):
     donor_count = Donor.objects.filter(donor_student=student_id).count()
+    total = 10
+    progress = (donor_count / total) * 100
     s_donors = Donor.objects.filter(donor_student_id=student_id)
     student = Roster.objects.get(pk=student_id)
 
@@ -88,7 +90,7 @@ def donors(request, student_id):
         form = DonorForm(student=student)
 
     return render(request, 'contact/donor.html', dict(form=form,student_id=student_id, donor_count=donor_count,
-                                                      s_donors=s_donors))
+                                                      s_donors=s_donors, progress=progress))
 
 def coach(request):
     if request.POST:

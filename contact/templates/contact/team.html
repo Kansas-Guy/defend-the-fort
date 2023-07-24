@@ -1,17 +1,21 @@
-{% extends 'base.html' %}
+{{% extends 'base.html' %}
 
 {% block content %}
 
     <div class="form-container">
-        <p class="text">Choose your sport:</p>
+        <h2 class="page-title">Select Your Sport</h2>
+        <p class="instruction-text">Please select the sport team you're part of. This will help us provide you with relevant information and opportunities.</p>
         <form method="POST" action="{% url 'team' %}" enctype="multipart/form-data">
             {%  csrf_token %}
-            {{ form.as_p }}
-            <button>Next</button>
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button class="main-button">Next</button>
         </form>
     </div>
 
 {% endblock content %}
+
 
 
 

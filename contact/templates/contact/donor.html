@@ -1,47 +1,55 @@
 {% extends 'base.html'%}
 
 {% block content %}
+    <div class="main-content">
+        <div class="form-container">
+            <h2 class="form-title">Contact Information</h2>
+            <p class="form-description">You've received the support of many people on your journey to FHSU.
+                <br>They want to keep supporting you now.</p>
+            <p class="form-description">Please fill in the form below for each of your contacts.</p>
+            <p>Contacts submitted: {{ donor_count }}/10</p>
 
-    <div class="form-container">
-        <p>Contact info submitted: {{ donor_count }}/10</p>
-        <form method="POST" action="{%  url 'donor' student_id %}" enctype="multipart/form-data">
-            {%  csrf_token %}
-            {{  form.as_p }}
-            <button>Submit</button>
-        </form>
+            <div id="progress-bar-container">
+                <div id="progress-bar" style="width: {{ progress }}%;"></div>
+            </div>
+            <form method="POST" action="{%  url 'donor' student_id %}" enctype="multipart/form-data">
+                {%  csrf_token %}
+                {{  form.as_p }}
+                <button class="main-button">Submit</button>
+            </form>
+        </div>
+        <div class="donor-content">
+            <h4 class="content-title">Submitted Contact Information</h4>
+            <table class="contacts-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Zipcode</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in s_donors %}
+                        <tr>
+                            <td>{{ d.donor_name }}</td>
+                            <td>{{ d.donor_email }}</td>
+                            <td>{{ d.donor_phone }}</td>
+                            <td>{{ d.donor_address }}</td>
+                            <td>{{ d.donor_city }}</td>
+                            <td>{{ d.donor_state }}</td>
+                            <td>{{ d.donor_zip }}</td>
+                            <td><a href="{% url 'donor_edit' d.id %}" class="edit-button">Edit</a> </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+            </table>
+        </div>
     </div>
-    <div class="donor-content">
-        <h4 class="page-title">Submitted Contact Information</h4>
-        <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Zipcode</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for d in s_donors %}
-                    <tr>
-                        <td>{{ d.donor_name }}</td>
-                        <td>{{ d.donor_email }}</td>
-                        <td>{{ d.donor_phone }}</td>
-                        <td>{{ d.donor_address }}</td>
-                        <td>{{ d.donor_city }}</td>
-                        <td>{{ d.donor_state }}</td>
-                        <td>{{ d.donor_zip }}</td>
-                        <td><a href="{% url 'donor_edit' d.id %}">Edit</a> </td>
-                        {% endfor %}
-                    </tr>
-                </tbody>
-        </table>
-    </div>
-
 
 {% endblock content %}
 

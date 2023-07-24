@@ -4,16 +4,19 @@
 
 body {
     font-family: "Open Sans", sans-serif;
-    background-color: #f7f6f3;
+    background-color: #ffffff;
     position: relative;
     min-height: 100vh;
-    margin-bottom: 200px;
     clear: both;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
 }
 
 nav {
-    position: fixed;
-    background-color: #333333;
+    position: static;
+    background-color: #000000;
     width: 100%;
     display: inline-block;
     top: 0;
@@ -29,22 +32,19 @@ h1 a {
     font-size: 24px;
 }
 
-.main-button {
-    display: block;
-    background-color: #333333;
+.begin-button {
+    background-color: #000000;
     position: relative;
     color: white;
     text-decoration: none;
-    padding: 10px 45px;
-    border-radius: 5px;
-    margin: 0 10px;
+    padding: 10px 50px;
+    border: none;
+    margin: 20px 0;
     text-align: center;
-    border: solid 2px transparent;
-    width: 55vw;
 }
 
-.main-button:hover {
-    border: solid 2px #63656a;
+.begin-button:hover {
+    background-color: #fdb913;
 }
 
 .container {
@@ -53,42 +53,34 @@ h1 a {
     margin: auto;
     width: 80%;
     display: block;
+    flex: 1;
 }
 
 .home {
-    width: 90%;
-    margin: auto;
-    display: block;
+    width: 100%;
+    margin: 0;
+    display: flex;
     position: relative;
+    height: 100vh;
+    align-items: stretch;
+    justify-content: center;
 }
 
 .section {
     position: relative;
-    top: 75px;
+    /*top: 75px;*/
     margin: auto;
     width: 80%;
     display: block;
 }
 
-form {
-    display: block;
-    padding: 0 30px;
+input, select, textarea {
     width: 100%;
-}
-
-.form-container {
-    width: 85%;
-    background-color: gainsboro;
-    margin: auto;
-    padding: 25px;
-    border-radius: 7px;
-    position: relative;
-    display: block;
-}
-
-input, select {
-    width: 45%;
-    height: 25px;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 button {
@@ -100,14 +92,13 @@ button {
 }
 
 footer {
-    background: #333333;
-    position: fixed;
+    background: #000000;
+    position: relative;
     display: block;
     width: 100%;
-    bottom: 0px;
-    left:0;
-    height: 100px;
+    height: 75px;
     padding: 10px 0 10px 0;
+    margin-top: 20px;
 
 }
 
@@ -124,37 +115,33 @@ footer ul li a {
 }
 
 .home-section {
-    width: 80%;
+    width: 100%;
     position: relative;
-    display: block;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
-    padding: 10px 30px 30px;
+    padding: 0;
     margin-bottom: 15px;
-    border-radius: 7px;
+    height: 100%;
 }
 
-table {
-    border-collapse: separate;
-    border-spacing: 25px 10px;
-    width: 80%;
-    margin: auto;
-    top: 20px;
+.contacts-table {
+    width: 100%;
+    border-collapse: collapse;
     position: relative;
+}
+
+.contacts-table td {
+    border-bottom: 1px solid #000000;
+    padding: 20px 0;
 }
 
 tbody tr td {
     text-align: center;
 }
 
-.page-title {
-    width: 90%;
-    margin: auto;
-    border-bottom: #333333 2px solid;
-}
-
-.page-title h2, h4 {
-    text-align: center;
-}
 
 h2 {
     font-size: 2em;
@@ -165,25 +152,229 @@ h4 {
     font-style: italic;
 }
 
-.content {
-    padding-bottom: 100px;
-    padding-top: 50px;
+main {
+    padding-top: 10px;
     position: relative;
     display: block;
     width: 85%;
-    background-color: gainsboro;
+    background-color: #FFFFFF;
     margin: auto;
-    top: 100px;
-    border-radius: 7px;
+    border: none;
 }
 
 .donor-content {
-    padding-bottom: 100px;
-    padding-top: 50px;
-    position: relative;
-    display: block;
-    width: 85%;
-    background-color: gainsboro;
-    margin: auto;
+    width: 90%;
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.15);
+    padding: 25px;
     border-radius: 7px;
+
+}
+.welcome-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+
+.welcome-image {
+    flex: 1 0 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.welcome-text {
+    padding: 20px;
+    width: 50%;
+    flex: 1 0 50%;
+}
+
+@media screen and (min-width: 768px) {
+    .home-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+
+    .welcome-image, .welcome-text {
+        width: 100%;
+    }
+
+}
+
+.page-title {
+    text-align: left;
+    margin-bottom: 20px;
+    border-bottom: #333333 2px solid;
+}
+
+.content-title {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: #333333 2px solid;
+}
+
+.instruction-text {
+    margin-bottom: 30px;
+}
+
+.form-container {
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.15);
+    padding: 25px;
+    border-radius: 7px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.load-donors {
+    width: 20%;
+    display: inline-block;
+    padding: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.load-donors:hover {
+    background-color: #fdb913;
+}
+
+.main-button {
+    width: 100%;
+    display: inline-block;
+    padding: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.main-content {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.main-button:hover {
+    background-color: #fdb913;
+}
+
+#progress-bar-container {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 25px;
+    /*box-shadow: inset 0 0 5px #000;*/
+    border: 1px solid #000000
+}
+
+#progress-bar {
+    height: 25px;
+    background-color: #fdb913;
+    border-radius: 25px;
+}
+
+.edit-button {
+    display: inline-block;
+    background-color: #000000;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+
+.edit-button:hover {
+    background-color: #fdb913;
+}
+
+@media only screen and (max-width: 768px) {
+     .main-content {
+        flex-direction: column;
+    }
+
+    .form-container {
+        width: 90%;
+    }
+
+    .donor-content {
+        width: 90%;
+    }
+
+    /* Force table to not be like tables anymore */
+    .contacts-table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .contacts-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .contacts-table tr { border: 1px solid #ccc; margin-bottom: 10px;}
+
+    .contacts-table td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 40%;
+        text-align: left;
+    }
+
+    .contacts-table td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 25%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+
+    /*
+    Label the data
+    */
+    .contacts-table td:nth-of-type(1):before { content: "Name"; }
+    .contacts-table td:nth-of-type(2):before { content: "Email"; }
+    .contacts-table td:nth-of-type(3):before { content: "Phone"; }
+    .contacts-table td:nth-of-type(4):before { content: "Address"; }
+    .contacts-table td:nth-of-type(5):before { content: "City"; }
+    .contacts-table td:nth-of-type(6):before { content: "State"; }
+    .contacts-table td:nth-of-type(7):before { content: "Zipcode"; }
+    .contacts-table td:nth-of-type(8):before { content: "Edit"; }
 }
