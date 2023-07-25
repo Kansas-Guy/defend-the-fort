@@ -319,6 +319,18 @@ main {
     background-color: #fdb913;
 }
 
+.student-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #000000;
+    padding-top: 15px;
+}
+
+.student-info p, .student-info h3 {
+    width: 30%;
+}
+
 @media only screen and (max-width: 768px) {
      .main-content {
         flex-direction: column;

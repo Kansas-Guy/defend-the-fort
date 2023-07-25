@@ -9,9 +9,12 @@
         <div id="students">
             {% for student in student_info %}
             <div class="student" data-id="{{ student.student_id }}">
-                <h3>{{ student.name }}</h3>
-                <p>Donor contacts submitted: {{ student.donor_count }}</p>
-                <button class="load-donors">Review</button>
+                <div class="student-info">
+                    <h3>{{ student.name }}</h3>
+                    <p>Contacts submitted: {{ student.donor_count }}</p>
+                    <p>Approved contacts: {{ student.approved_count }}</p>
+                    <button class="load-donors">Review</button>
+                </div>
                 <div class="donors"></div>
             </div>
             {% endfor %}
@@ -36,6 +39,10 @@
 
     function formatFieldName(fieldName) {
         let parts = fieldName.split('_');
+
+        if (parts[0] === 'donor') {
+            parts = parts.slice(1);
+        }
         for (let i = 0; i < parts.length; i++) {
             parts[i] = parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
         }
@@ -52,7 +59,7 @@
                 div.style.display = 'none';
             });
 
-            let studentDiv = this.parentElement;
+            let studentDiv = this.parentElement.parentElement;
             let donorsDiv = studentDiv.querySelector('.donors');
             let studentId = studentDiv.getAttribute('data-id');
 
@@ -60,6 +67,7 @@
                 .then(response => response.json())
                 .then(data => {
                     let table = document.createElement('table');
+                    table.className = "donor-content";
                     let thead = document.createElement('thead');
                     let tbody = document.createElement('tbody');
 
