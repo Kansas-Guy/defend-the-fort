@@ -3,8 +3,7 @@
 {% block content %}
 
     <div class="form-container">
-        <h2 class="page-title">Select Your Sport</h2>
-        <p class="instruction-text">Please select the sport team you're part of. This will help us provide you with relevant information and opportunities.</p>
+        <h2 class="page-title">Select Your Team</h2>
         <form method="POST" action="{% url 'team' %}" enctype="multipart/form-data">
             {%  csrf_token %}
             <div class="form-group">
