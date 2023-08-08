@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 
 from .models import StudentInfo, Team, Donor, Roster
 
+import re
+
 class TeamForm(forms.Form):
     team = forms.ModelChoiceField(queryset=Team.objects.all())
 
@@ -61,9 +63,49 @@ class DonorForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.student = kwargs.pop('student', None)  # extract student from kwargs
         super().__init__(*args, **kwargs)
+
+    def clean_donor_address(self):
+        address = self.cleaned_data.get('donor_address', '')
+
+        # Convert the entire address to title case
+        address = address.title()
+
+        # Convert directional words to their abbreviations
+        address = address.replace('West', 'W').replace('East', 'E').replace('North', 'N').replace('South', 'S')
+
+        # Replace all occurrences of "Th", "St", "Nd", etc., following a number with lowercase
+        address = re.sub(r'(\d+)(St|Nd|Rd|Th)', lambda m: m.group(1) + m.group(2).lower(), address)
+
+        # Define the mapping of full names to abbreviations
+        abbreviations = {
+            'Street': 'St',
+            'Avenue': 'Ave',
+            'Drive': 'Dr',
+            'Circle': 'Cir',
+            'Road': 'Rd',
+            'Court': 'Ct',
+            'Parkway': 'Pkwy',
+            'Boulevard': 'Blvd',
+            'Highway': 'Hwy',
+            'Lane': 'Ln'
+            # Add more mappings as needed
+        }
+
+        # Replace the full names with abbreviations
+        for full, abbrev in abbreviations.items():
+            address = re.sub(r'\b' + full + r'\b', abbrev, address)
+
+        # Remove any periods following the abbreviations
+        address = re.sub(r'(\bSt|\bAve|\bDr|\bCir)\.', r'\1', address)
+
+        return address
+
     def clean(self):
         cleaned_data = super().clean()
+        cleaned_data['donor_address'] = self.clean_donor_address()
         address = cleaned_data.get('donor_address')
+        cleaned_data['donor_city'] = cleaned_data['donor_city'].title()
+        cleaned_data['donor_name'] = cleaned_data['donor_name'].title()
         student = self.student
         if address and student and Donor.objects.filter(donor_address=address, donor_student=student).exists():
             raise ValidationError('You have already submitted a contact with that address.')
