@@ -1,8 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
-
-from .models import StudentInfo, Team, Donor, Roster
+from .models import Team, Donor, Roster
 
 import re
 
@@ -10,27 +9,27 @@ class TeamForm(forms.Form):
     team = forms.ModelChoiceField(queryset=Team.objects.all())
 
 class StudentSelect(forms.ModelForm):
+    student_name = forms.ChoiceField(choices=[])
     class Meta:
-        model = StudentInfo
-        exclude = ('team','pref_name', 'student_phone', 'student_email')
+        model = Roster
+        exclude = ('team','pref_name')
         fields = ('student_name',)
         labels = {
             'student_name': "Select your name"
         }
     def __init__(self, team, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['student_name'].queryset = Roster.objects.filter(team_id=team)
+        student_choices = Roster.objects.filter(team_id=team).values_list('id', 'student_name')
+        self.fields['student_name'].choices = student_choices
 
 class StudentInfoForm(forms.ModelForm):
     # student_name = forms.ModelChoiceField(queryset=Roster.objects.all(), to_field_name='student_name')
     class Meta:
-        model = StudentInfo
+        model = Roster
         exclude = ('team', 'student_name',)
-        fields= ('pref_name', 'student_phone', 'student_email')
+        fields= ('pref_name',)
         labels = {
-            'pref_name': "Your preferred name",
-            'student_phone': "Phone number",
-            'student_email': "Email address"
+            'pref_name': "What do your friends and family call you?",
         }
     # def __init__(self, team, *args, **kwargs):
     #     super().__init__(*args, **kwargs)

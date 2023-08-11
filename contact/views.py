@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from .forms import StudentInfoForm, DonorForm, TeamForm, CoachForm, StudentSelect
-from .models import StudentInfo, Team, Roster, Donor
+from .models import Team, Roster, Donor
 from rest_framework import viewsets
 from .serializers import DonorSerializer, RosterSerializer
 from django.shortcuts import get_object_or_404
@@ -33,9 +33,8 @@ def student(request, team_select): # view for selecting student name
     if request.method == 'POST':
         form = StudentSelect(team_select, request.POST)
         if form.is_valid():
-            student_name = request.POST.get('student_name')
-            student_id = Roster.objects.get(pk=student_name).pk
-            if StudentInfo.objects.filter(student_name_id=student_id).exists() != True:
+            student_id = request.POST.get('student_name')
+            if Roster.objects.filter(id=student_id, pref_name__isnull=True).exists():
                 return redirect(student_info, student_id, team_select)
             # check to see if student has provided their info
             else:
@@ -45,23 +44,24 @@ def student(request, team_select): # view for selecting student name
 
     return render(request, 'contact/student.html', dict(form=form,team_select=team_select))
 
+
 def student_info(request, student_id, team_select):
+    student_instance = Roster.objects.get(pk=student_id)
+
     if request.method == 'POST':
-        form = StudentInfoForm(request.POST)
+        form = StudentInfoForm(request.POST, instance=student_instance)  # Pass the specific student instance to update
         if form.is_valid():
             student_form = form.save(commit=False)
             # use team_select to fill out team field in form
             student_form.team = Team.objects.get(pk=team_select)
-            # use student_id to fill out student_name field in form
-            student_form.student_name = Roster.objects.get(pk=student_id)
             student_form.save()
-            form.save()
-        # send user to the donor form after completing their data
+            # send user to the donor form after completing their data
             return redirect(donors, student_id)
     else:
-        form = StudentInfoForm()
+        form = StudentInfoForm(instance=student_instance)  # Pass the specific student instance to the form
 
-    return render(request, 'contact/student-info.html', dict(form=form,team_select=team_select, student_id=student_id))
+    return render(request, 'contact/student-info.html', dict(form=form, team_select=team_select, student_id=student_id))
+
 
 def donors(request, student_id):
     donor_count = Donor.objects.filter(donor_student=student_id).count()
