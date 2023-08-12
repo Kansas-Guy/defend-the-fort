@@ -35,7 +35,7 @@ def student(request, team_select): # view for selecting student name
         if form.is_valid():
             student_id = request.POST.get('student_name')
             if Roster.objects.filter(id=student_id, pref_name__isnull=True).exists():
-                return redirect(student_info, student_id, team_select)
+                return redirect(student_info, team_select, student_id)
             # check to see if student has provided their info
             else:
                 return redirect(donors, student_id)
