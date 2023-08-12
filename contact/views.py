@@ -45,7 +45,7 @@ def student(request, team_select): # view for selecting student name
     return render(request, 'contact/student.html', dict(form=form,team_select=team_select))
 
 
-def student_info(request, student_id, team_select):
+def student_info(request, team_select, student_id):
     student_instance = Roster.objects.get(pk=student_id)
 
     if request.method == 'POST':
