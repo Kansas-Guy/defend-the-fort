@@ -16,7 +16,10 @@ team_dict = {
     "Men's Basketball": 11,
     "Women's Basketball": 12,
     "Softball": 13,
-    "Tennis": 14
+    "Tennis": 14,
+    "Women's Wrestling": 15,
+    "Tiger Debs": 16,
+    "Cheerleading": 18,
 }
 
 def roster_import(file):
