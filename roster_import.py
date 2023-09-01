@@ -1,5 +1,5 @@
 import csv
-from contact.models import Roster
+from contact.models import Roster, Team
 
 
 team_dict = {
@@ -11,13 +11,13 @@ team_dict = {
     "Women's Golf": 6,
     "Cross Country": 7,
     "Baseball": 8,
-    "Wrestling": 9,
-    "Track and Field": 10,
+    "Men's Wrestling": 9,
+    "Track and Field/Cross Country": 10,
     "Men's Basketball": 11,
     "Women's Basketball": 12,
     "Softball": 13,
     "Tennis": 14,
-    "Women's Wrestling": 15,
+    "Women's Wrestling": 17,
     "Tiger Debs": 16,
     "Cheerleading": 18,
 }
@@ -26,5 +26,6 @@ def roster_import(file):
     with open(file, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            s = Roster(student_name=row['name'], team_id=team_dict[row['sport']])
+            team_instance = Team.objects.get(id=team_dict[row['sport']])
+            s = Roster(student_name=row['name'], team=team_instance)
             s.save()
