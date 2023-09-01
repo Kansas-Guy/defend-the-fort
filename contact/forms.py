@@ -19,7 +19,7 @@ class StudentSelect(forms.ModelForm):
         }
     def __init__(self, team, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        student_choices = Roster.objects.filter(team_id=team).values_list('id', 'student_name')
+        student_choices = Roster.objects.filter(team_id=team).order_by('student_name').values_list('id', 'student_name')
         self.fields['student_name'].choices = student_choices
 
 class StudentInfoForm(forms.ModelForm):
