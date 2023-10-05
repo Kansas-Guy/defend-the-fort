@@ -118,6 +118,15 @@
                             }
                             bodyRow.appendChild(td);
                         }
+
+                         let editTd = document.createElement('td');
+                        let editButton = document.createElement('a');
+                        editButton.href = '/contact/donor/' + donor.id + '/update';  // Modify the URL based on your URL pattern
+                        editButton.textContent = 'Edit';
+                        editButton.className = 'edit-button';
+                        editTd.appendChild(editButton);
+                        bodyRow.appendChild(editTd);
+
                         tbody.appendChild(bodyRow);
 
                         // Add thead and tbody to the table
