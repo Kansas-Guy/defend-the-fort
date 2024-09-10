@@ -26,7 +26,7 @@ def team(request):
             return redirect('student', team_select)
     else:
         form = ProjectForm()
-    return render(request, 'contact/team.html', dict(form=TeamForm))
+    return render(request, 'contact/team.html', dict(form=ProjectForm))
 
 def student(request, team_select): # view for selecting student name
 
