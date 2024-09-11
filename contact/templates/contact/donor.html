@@ -23,26 +23,20 @@
             <table class="contacts-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th>Zipcode</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for d in s_donors %}
                         <tr>
-                            <td>{{ d.donor_name }}</td>
-                            <td>{{ d.donor_email }}</td>
-                            <td>{{ d.donor_phone }}</td>
-                            <td>{{ d.donor_address }}</td>
-                            <td>{{ d.donor_city }}</td>
-                            <td>{{ d.donor_state }}</td>
-                            <td>{{ d.donor_zip }}</td>
+                            <td>{{ d.contact_first }}</td>
+                            <td>{{ d.contact_last }}</td>
+                            <td>{{ d.contact_email }}</td>
+                            <td>{{ d.contact_phone }}</td>
                             <td><a href="{% url 'donor_edit' d.id %}" class="edit-button">Edit</a> </td>
                             {% endfor %}
                         </tr>

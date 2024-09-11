@@ -14,41 +14,37 @@ import json
 def contact(request):
     return render(request, 'contact/contact.html')
 
-def team(request):
+def project(request):
     # anything that can be done to limit input error should be done
     if request.POST:
         form = ProjectForm(request.POST)
         if form.is_valid():
             # grab team selection for form
-            team_select = request.POST.get('team')
+            project_select = request.POST.get('project')
 
             # pass team_selection to student view
-            return redirect('student', team_select)
+            return redirect('student', project_select)
     else:
         form = ProjectForm()
-    return render(request, 'contact/team.html', dict(form=ProjectForm))
+    return render(request, 'contact/project.html', dict(form=ProjectForm))
 
-def student(request, team_select): # view for selecting student name
+def student(request, project_select): # view for selecting student name
 
     if request.method == 'POST':
-        form = StudentSelect(team_select, request.POST)
+        form = StudentSelect(project_select, request.POST)
         if form.is_valid():
             student_id = request.POST.get('student_name')
-            if Members.objects.filter(id=student_id, pref_name__isnull=True).exists():
-                return redirect(donors, team_select, student_id)
-            # check to see if student has provided their info
-            else:
-                return redirect(donors, student_id)
+            return redirect(donors, student_id)
     else:
-        form = StudentSelect(team_select)
+        form = StudentSelect(project_select)
 
-    return render(request, 'contact/student.html', dict(form=form,team_select=team_select))
+    return render(request, 'contact/student.html', dict(form=form,project_select=project_select))
 
 def donors(request, student_id):
-    donor_count = Contacts.objects.filter(donor_student=student_id).count()
+    donor_count = Contacts.objects.filter(contact_student=student_id).count()
     total = 10
     progress = (donor_count / total) * 100
-    s_donors = Contacts.objects.filter(donor_student_id=student_id)
+    s_donors = Contacts.objects.filter(contact_student_id=student_id)
     student = Members.objects.get(pk=student_id)
 
     if request.method == 'POST':
@@ -56,7 +52,7 @@ def donors(request, student_id):
 
         if form.is_valid():
             donor_contact = form.save(commit=False)
-            donor_contact.donor_student = student
+            donor_contact.contact_student = student
             form.instance = donor_contact
             donor_contact.save()
 
@@ -70,8 +66,8 @@ def donors(request, student_id):
     else:
         form = ContactForm(student=student)
 
-    return render(request, 'contact/donor.html', dict(form=form,student_id=student_id, donor_count=donor_count,
-                                                      s_donors=s_donors, progress=progress))
+    return render(request, 'contact/donor.html', dict(form=form, student_id=student_id,
+                                                      donor_count=donor_count, s_donors=s_donors, progress=progress))
 
 def coach(request):
     if request.POST:
@@ -116,16 +112,16 @@ def review(request, student_id):
     return render(request, 'contact/review.html', dict(student_id=student_id, s_donors=s_donors))
 
 def donor_edit(request, donor_id):
-    donor = Contacts.objects.get(id=donor_id)
-    student_id = donor.donor_student_id
+    contact = Contacts.objects.get(id=donor_id)
+    student_id = contact.contact_student_id
 
     if request.method == 'POST':
-        form = ContactForm(request.POST, instance=donor)
+        form = ContactForm(request.POST, instance=contact)
         if form.is_valid():
             form.save()
             return redirect(donors, student_id)
     else:
-        form = ContactForm(instance=donor)
+        form = ContactForm(instance=contact)
     return render(request, 'contact/donor_edit.html', dict(donor_id=donor_id, form=form, student_id=student_id))
 
 class DonorViewSet(viewsets.ReadOnlyModelViewSet):

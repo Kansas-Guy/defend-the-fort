@@ -3,8 +3,8 @@
 {% block content %}
 
     <div class="form-container">
-        <h2 class="page-title">Select Your Team</h2>
-        <form method="POST" action="{% url 'team' %}" enctype="multipart/form-data">
+        <h2 class="page-title">Select Your Project</h2>
+        <form method="POST" action="{% url 'project' %}" enctype="multipart/form-data">
             {%  csrf_token %}
             <div class="form-group">
                 {{ form.as_p }}

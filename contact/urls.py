@@ -10,9 +10,9 @@ router.register('roster', RosterViewSet, basename='roster')
 urlpatterns = [
     # ex: /contact/
     path('', views.contact, name='contact'),
-    path('team', views.team, name='team'),
+    path('project', views.project, name='project'),
     # ex: /contact/Football
-    path('<int:team_select>/student', views.student, name='student'),
+    path('<int:project_select>/student', views.student, name='student'),
     path('<int:student_id>/donor', views.donors, name='donor'),
     path('coach', views.coach, name='coach'),
     path('coach/<int:team>/dashboard', views.dashboard, name='dashboard'),

@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="form-container">
-        <form method="POST" action="{% url 'student' team_select %}" enctype="multipart/form-data">
+        <form method="POST" action="{% url 'student' project_select %}" enctype="multipart/form-data">
             {%  csrf_token %}
             {{  form.as_p }}
         <button class="main-button">Next</button>
