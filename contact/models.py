@@ -5,7 +5,8 @@ from django.db import models
 class Project(models.Model):
     project_name = models.CharField(max_length=50)
     project_link = models.URLField(max_length=200, blank=True)
-
+    project_group = models.CharField(max_length=120, blank=True)
+    project_goal = models.IntegerField(default=0)
     def __str__(self):
         return self.project_name
 
